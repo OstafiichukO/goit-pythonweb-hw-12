@@ -1,24 +1,27 @@
-[project]
-name = "goit-pythonweb-hw-08"
+[tool.poetry]
+name = "goit-pythonweb-hw-10"
 version = "0.1.0"
 description = ""
-authors = [
-    {name = "ostafiichuko",email = "issimo333@gmail.com"}
-]
+authors = ["Oleksii Ostafiichuk <issimo333@gmail.com>"]
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = [
-    "alembic (>=1.15.1,<2.0.0)",
-    "sqlalchemy (>=2.0.38,<3.0.0)",
-    "sqlalchemy-orm (>=1.2.10,<2.0.0)",
-    "python-dotenv (>=1.0.1,<2.0.0)",
-    "colorama (>=0.4.6,<0.5.0)",
-    "fastapi[standard] (>=0.115.11,<0.116.0)",
-    "psycopg2 (>=2.9.10,<3.0.0)",
-    "asyncpg (>=0.30.0,<0.31.0)"
-]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = {extras = ["standard"], version = "^0.115.6"}
+asyncpg = "^0.30.0"
+sqlalchemy = "^2.0.37"
+alembic = "^1.14.0"
+uvicorn = {extras = ["standard"], version = "^0.34.0"}
+pydantic = {extras = ["email"], version = "^2.10.5"}
+libgravatar = "^1.0.4"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+pydantic-settings = "^2.7.1"
+fastapi-mail = "^1.4.2"
+slowapi = "^0.1.9"
+cloudinary = "^1.42.1"
 
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
