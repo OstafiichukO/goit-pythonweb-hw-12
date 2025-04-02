@@ -13,16 +13,22 @@ Functions:
 from datetime import UTC, datetime, timedelta
 from typing import Optional
 
+import redis
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
+from redis_lru import RedisLRU
 from sqlalchemy.orm import Session
 
 from src.conf.config import settings
 from src.database.db import get_db
 from src.services.users import UserService
+from src.database.models import User, UserRole
 
+
+client = redis.StrictRedis(host="localhost", port=6379, password=None)
+cache = RedisLRU(client, default_ttl=15 * 60)
 
 class Hash:
     """
@@ -87,7 +93,19 @@ async def create_access_token(data: dict, expires_delta: Optional[int] = None):
     )
     return encoded_jwt
 
+def get_current_admin_user(current_user: User = Depends(get_current_user)):
+    """
+    Checks if the current user is an admin.
+    """
+    if current_user.role != UserRole.ADMIN:
+        print("The user does not have enough privileges to load AVATAR")
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="The user does not have enough privileges",
+        )
+    return current_user
 
+@cache
 async def get_current_user(
     token: HTTPAuthorizationCredentials = Depends(oauth2_scheme),
     db: Session = Depends(get_db),
