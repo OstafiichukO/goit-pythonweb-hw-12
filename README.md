@@ -28,20 +28,48 @@ poetry install
   ```Shell
    .\\make.bat html
   ```
+-
 - Документація сформована у файлі
   [docs/\_build/html/index.html](docs/_build/html/index.html)
+
+## 2. Тестування.
+
+Для тестування використаємо фреймворк `pytest`
+
+- Створимо [tests/conftest.py](tests/conftest.py) для налаштування та
+  конфігурації тестів.
+- Створимо безпосередньо файли тестів
+  - [tests/test_integration_auth.py](tests/test_integration_auth.py)
+  - [tests/test_integration_contacts.py](tests/test_integration_contacts.py)
+  - [tests/test_unit_repository_contacts.py](tests/test_unit_repository_contacts.py)
+- Запустимо тести з кореня проекту
+
+  ```shell
+  pytest -vs tests
+  ```
+
+- Для перевірки рівня покриття тестами використаємо `pytest-cov`
+  ```shell
+  poetry add pytest-cov
+  pytest --cov=src tests/ --cov-report=html
+  ```
+  Остання команда генерує інтерактивний html-звіт покриття тестами.
+- Файли для аналізу покриття можна налаштувати в
+  [pyproject.toml](pyproject.toml)
+  [Specifying source files ](https://coverage.readthedocs.io/en/latest/source.html#source)  
+   ![alt text](md.media/001.png)
 
 ## Запуск
 
 Щоб запустити програму FastAPI для розробки, можна використати `fastapi dev`
 команду:
 
-    fastapi dev main.py
+fastapi dev main.py
 
 Або, щоб більш гнучко налаштовувати запуск, можна виконати наступну команду, щоб
 запустити сервер `FastAPI` з `uvicorn`:
 
-    uvicorn main:app --host localhost --port 8000 --reload
+uvicorn main:app --host localhost --port 8000 --reload
 
 Тут параметри команди мають наступне значення:
 
