@@ -47,6 +47,8 @@ poetry install
   pytest -vs tests
   ```
 
+  <!-- ![tests result](md.media/001.png) -->
+
 - Для перевірки рівня покриття тестами використаємо `pytest-cov`
   ```shell
   poetry add pytest-cov
@@ -55,8 +57,8 @@ poetry install
   Остання команда генерує інтерактивний html-звіт покриття тестами.
 - Файли для аналізу покриття можна налаштувати в
   [pyproject.toml](pyproject.toml)
-  [Specifying source files ](https://coverage.readthedocs.io/en/latest/source.html#source)  
-   ![alt text](md.media/001.png)
+  [Specifying source files ](https://coverage.readthedocs.io/en/latest/source.html#source)
+   <!-- ![alt text](md.media/002.png) -->
 
 ## 3. Кешування з Redis
 
@@ -261,6 +263,23 @@ async def update_avatar_user(
 до репозиторію. Приклад файла збережемо у [.env.example](.env.example)
 
 ## 7. Контейнеризація
+
+## Розгортання у хмарі
+
+Для розгортання у хмарі використаємо [Koeb](https://www.koyeb.com/)
+
+- підключаємо сервіс до GitHub
+- обираємо репозиторій
+- налаштовуємо оточення з нашого файлу `.env`
+  <!-- ![alt text](md.media/koyeb_01.png) -->
+- налаштовуємо health check
+  <!-- ![alt text](md.media/koyeb_03.png) -->
+- створюємо БД
+  <!-- ![alt text](md.media/koyeb_02.png) -->
+- змінну оточення `DB_URL` налаштовуємо для роботи із створеною БД
+- застосовуємо міграції `alembic upgrade head`
+- після застосування міграцій сервіс запускається і проходить health check
+<!-- ![alt text](md.media/koyeb_04.png) -->
 
 ## Запуск
 
